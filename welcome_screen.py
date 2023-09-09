@@ -2,7 +2,7 @@
 
 import pygame, thorpy as tp
 
-import main3
+import main
 
 pygame.init()
 
