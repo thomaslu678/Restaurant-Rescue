@@ -314,6 +314,8 @@ class Customer(pygame.sprite.Sprite):
         if self.timer is not None and self.timer.time_up:
             self.timer.kill()
             self.served = True
+            global display_dialogue
+            display_dialogue = 1
         if self.served:
             if self.timer is not None:
                 self.timer.kill()
@@ -336,20 +338,24 @@ class Customer(pygame.sprite.Sprite):
             self.image = self.left
             if (self.rect.x <= front.rect.x + front.rect.width + 4):
                 self.rect.topleft = [self.x, self.y]
+                speech_bubble = SpeechBubble(customer.rect.x + 20, customer.rect.y - 100)
+                breakfast_item = BreakfastItem(customer.rect.x + 50, customer.rect.y - 65,
+                                               random.randint(0, len(breakfast_foods) - 1))
+
                 if self.order is None:
                     keys = pygame.key.get_pressed()
                     if keys[pygame.K_g]:
-                        speech_bubble = SpeechBubble(customer.rect.x + 20, customer.rect.y - 100)
-                        speech_bubbles.add(speech_bubble)
-                        breakfast_item = BreakfastItem(customer.rect.x + 50, customer.rect.y - 65, random.randint(0, len(breakfast_foods)-1))
-                        breakfasts.add(breakfast_item)
+                        if collide(player, front):
+                            self.order = breakfast_item
+                            self.speech = speech_bubble
+                            speech_bubbles.add(speech_bubble)
+                            breakfasts.add(breakfast_item)
+                            if difficulty == "HARD":
+                                self.timer = TimerBar(self.x, self.y - 20, 100, 5000)
+                                timers.add(self.timer)
 
-                        if difficulty == "HARD":
-                            self.timer = TimerBar(self.x, self.y - 20, 100, 5000)
-                            timers.add(self.timer)
 
-                        self.order = breakfast_item
-                        self.speech = speech_bubble
+
 
             elif not (self.served):
                 self.x -= 5
@@ -519,15 +525,7 @@ while running:
             running = False
 
         if event.type == NEW_CUSTOMER:
-            if difficulty == "EASY":
-                if(len(customers.sprites())) > 0:
-                    pass
-                else:
-                    customer = Customer()
-                    customers.add(customer)
-
-
-            if difficulty == "HARD":
+            if (len(customers.sprites())) == 0:
                 customer = Customer()
                 customers.add(customer)
 
