@@ -4,11 +4,11 @@ import pygame, thorpy as tp
 
 pygame.init()
 
-W, H = 1200, 700
+W, H = 1200, 600
 screen = pygame.display.set_mode((W,H))
 tp.init(screen, tp.theme_human) #bind screen to gui elements and set theme
 
-bck = pygame.image.load("assets/logo.png") #load some background pic for testing
+bck = pygame.image.load("assets/welcome.png") #load some background pic for testing
 bck = pygame.transform.smoothscale(bck, (W,H))
 def before_gui(): #add here the things to do each frame before blitting gui elements
     screen.blit(bck, (0,0)) #blit background pic
