@@ -1,12 +1,10 @@
 import pygame, thorpy as tp
+import random
+import pygame
+import os
 
 flag = True
-
-def change():
-    print("reached")
-    print(1/0)
-    global flag
-    flag = False
+difficulty = "EASY"
 
 def first():
     pygame.init()
@@ -34,8 +32,14 @@ def first():
         alert.launch_alone() #see _example_launch for more options
 
     def get_difficulty():
+        global difficulty
         print("User has chosen:", ddl1.get_value())
-        change()
+        if ddl1.get_value()[0] == 'E' or ddl1.get_value()[0] == 'N':
+            difficulty = 'EASY'
+        elif ddl1.get_value()[0] == 'H':
+            difficulty = 'HARD'
+
+        print(1 / 0)
 
 
     launcher = tp.Button("View Instructions and Controls")
@@ -57,8 +61,6 @@ def first():
 
     ddl3_labelled = tp.Labelled("Third example", ddl3)
 
-    #to get the value of any my_ddl, just call my_ddl.get_value()
-
     group = tp.Box([ddl1_labelled, launcher, ddl3_labelled])
     group.center_on(screen)
     final_group = tp.Group([group, play_button])
@@ -72,16 +74,8 @@ while flag:
     except:
         break
 
-
-print("here")
-
-import random
-
-import pygame
-import os
+print(difficulty)
 pygame.init()
-
-difficulty = "EASY"
 
 inventory = None
 
