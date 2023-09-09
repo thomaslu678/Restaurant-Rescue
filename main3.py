@@ -8,17 +8,17 @@ difficulty = "EASY"
 
 inventory = None
 
-bg = pygame.image.load("../assets/kitchen+counter_crop.png")
+bg = pygame.image.load("assets/kitchen+counter_crop.png")
 bg = pygame.transform.scale(bg, (1200, 600))
 
-waiter = pygame.image.load("../assets/people/Pizza_GuyMale.png")
+waiter = pygame.image.load("assets/people/Pizza_GuyMale.png")
 waiter = pygame.transform.scale(waiter, (100, 100))
 
-speech_bubble = pygame.image.load("../assets/speech_bubble.png")
+speech_bubble = pygame.image.load("assets/speech_bubble.png")
 speech_bubble = pygame.transform.scale(speech_bubble, (100, 120))
 
 customer_sprites = []
-path = "../assets/people"
+path = "assets/people"
 dir_list = os.listdir(path)
 
 for file in dir_list:
@@ -27,7 +27,7 @@ for file in dir_list:
     customer_sprites.append(img)
 
 breakfast_foods = []
-path = "../assets/breakfast"
+path = "assets/breakfast"
 dir_list = os.listdir(path)
 
 for file in dir_list:
@@ -43,6 +43,44 @@ pygame.display.set_caption("Restaurant Game")
 pygame.display.set_icon(bg)
 
 clock = pygame.time.Clock()
+
+class TimerBar(pygame.sprite.Sprite):
+    def __init__(self, pos_x, pos_y, timer_width, time_limit):
+        super().__init__()
+        self.x = pos_x
+        self.y = pos_y
+        self.width = timer_width
+
+        self.time_limit = time_limit
+        self.time_left = time_limit
+
+        self.time_up = False
+
+        self.created = pygame.time.get_ticks()
+        self.image = screen
+        # self.image = pygame.Surface((self.width, 20))
+        self.rect2 = pygame.draw.rect(self.image,
+                                     "red",
+                                     pygame.Rect(pos_x, pos_y, self.width, 20))
+        self.rect = pygame.draw.rect(self.image,
+                                     "green",
+                                     pygame.Rect(pos_x, pos_y, self.width, 20))
+
+
+    def update(self):
+        self.rect2 = pygame.draw.rect(self.image,
+                                     "red",
+                                     pygame.Rect(self.x, self.y, self.width, 20))
+
+        now = pygame.time.get_ticks()
+        self.time_left = self.time_limit -(now - self.created)
+
+        if (self.time_left <= 0):
+            self.time_up = True
+        else:
+            self.rect = pygame.draw.rect(screen, "green",
+                                         pygame.Rect(self.x, self.y, self.width * (self.time_left / self.time_limit),
+                                                     20))
 
 class BreakfastItem(pygame.sprite.Sprite):
     def __init__(self, x, y, index):
@@ -71,6 +109,7 @@ class SpeechBubble(pygame.sprite.Sprite):
     def update(self):
         self.rect.topleft = [self.x, self.y]
 
+
 class Player(pygame.sprite.Sprite):
     def __init__(self, x, y):
         super().__init__()
@@ -87,9 +126,64 @@ class Player(pygame.sprite.Sprite):
         global inventory
         keys = pygame.key.get_pressed()
 
+        # cookie = BreakfastItem(player.rect.x, player.rect.y - 20, 0)
+
+        if inventory != None:
+            if inventory == "breakfast 0":
+                cookie_popup.x = player.x + 30
+                cookie_popup.y = player.y - 30
+                cookie_popup.update()
+                inventory_sprites.add(cookie_popup)
+            else:
+                inventory_sprites.remove(cookie_popup)
+
+            if inventory == "breakfast 1":
+                egg_popup.x = player.x + 30
+                egg_popup.y = player.y - 30
+                egg_popup.update()
+                inventory_sprites.add(egg_popup)
+            else:
+                inventory_sprites.remove(egg_popup)
+
+            if inventory == "breakfast 2":
+                muffin_popup.x = player.x + 30
+                muffin_popup.y = player.y - 30
+                muffin_popup.update()
+                inventory_sprites.add(muffin_popup)
+            else:
+                inventory_sprites.remove(muffin_popup)
+
+            if inventory == "breakfast 3":
+                pancakes_popup.x = player.x + 30
+                pancakes_popup.y = player.y - 30
+                pancakes_popup.update()
+                inventory_sprites.add(pancakes_popup)
+            else:
+                inventory_sprites.remove(pancakes_popup)
+
+            if inventory == "breakfast 4":
+                waffles_popup.x = player.x + 30
+                waffles_popup.y = player.y - 30
+                waffles_popup.update()
+                inventory_sprites.add(waffles_popup)
+            else:
+                inventory_sprites.remove(waffles_popup)
+        else:
+            for sprite in inventory_sprites:
+                sprite.kill()
+
         for station in all_stations:
+
             if (collide(player, station)):
                 if fridges in station.groups():
+                    # cookie.x = player.x
+                    # cookie.y = player.y - 20
+                    # if cookie not in all_sprites:
+                    #     all_sprites.add(cookie)
+                    # all_sprites.add(cookie)
+                    # cookie.x = player.rect.x
+                    # cookie.y = player.rect.y - 20
+
                     # if not (collide(player, fridge)):
                     if keys[pygame.K_e]:
                         inventory = "breakfast 0"
@@ -97,9 +191,9 @@ class Player(pygame.sprite.Sprite):
 
                 if stoves in station.groups():
                     # if not (collide(player, stove)):
-                        if keys[pygame.K_e]:
-                            inventory = "breakfast 1"
-                            # inventory = breakfast_foods[1]
+                    if keys[pygame.K_e]:
+                        inventory = "breakfast 1"
+                        # inventory = breakfast_foods[1]
 
                 if sinks in station.groups():
                     # if not (collide(player, sink)):
@@ -134,6 +228,7 @@ class Customer(pygame.sprite.Sprite):
         self.served = False
         self.order = None
         self.speech = None
+        self.timer = None
 
         self.image = customer_sprites[random.randint(0, len(customer_sprites)-1)]
         self.right = self.image
@@ -145,7 +240,13 @@ class Customer(pygame.sprite.Sprite):
         self.rect.topleft = [self.x, self.y]
     def update(self):
 
+        if self.timer is not None and self.timer.time_up:
+            self.timer.kill()
+            self.served = True
         if self.served:
+            if self.timer is not None:
+                self.timer.kill()
+                self.timer = None
             if self.order is not None:
                 self.order.kill()
                 # self.order = None
@@ -170,6 +271,10 @@ class Customer(pygame.sprite.Sprite):
                     breakfast_item = BreakfastItem(customer.rect.x + 50, customer.rect.y - 65, random.randint(0, len(breakfast_foods)-1))
                     breakfasts.add(breakfast_item)
 
+                    if difficulty == "HARD":
+                        self.timer = TimerBar(self.x, self.y - 20, 100, 5000)
+                        timers.add(self.timer)
+
                     self.order = breakfast_item
                     self.speech = speech_bubble
 
@@ -185,6 +290,13 @@ kitchens = pygame.sprite.Group()
 player = Player(600, 300)
 
 all_sprites.add(player)
+
+cookie_popup = BreakfastItem(player.rect.x, player.rect.y - 20, 0)
+egg_popup = BreakfastItem(player.rect.x, player.rect.y - 20, 1)
+muffin_popup = BreakfastItem(player.rect.x, player.rect.y - 20, 2)
+pancakes_popup = BreakfastItem(player.rect.x, player.rect.y - 20, 3)
+waffles_popup = BreakfastItem(player.rect.x, player.rect.y - 20, 4)
+
 
 walls = pygame.sprite.Group()
 wall1 = Wall(41, 44, 10, 515)
@@ -241,6 +353,8 @@ for station in trays:
 customers = pygame.sprite.Group()
 speech_bubbles = pygame.sprite.Group()
 breakfasts = pygame.sprite.Group()
+timers = pygame.sprite.Group()
+inventory_sprites = pygame.sprite.Group()
 
 kitchen_item_1 = BreakfastItem(87, 190, 0)
 kitchen_item_12 = BreakfastItem(87, 210, 0)
@@ -279,7 +393,7 @@ running = True
 
 NEW_CUSTOMER = pygame.USEREVENT + 1
 
-pygame.time.set_timer(NEW_CUSTOMER, 1000)
+pygame.time.set_timer(NEW_CUSTOMER, 5000)
 
 
 def collide(rect1, rect2):
@@ -370,9 +484,15 @@ while running:
         if player.rect.x + player.rect.width == front.rect.x:
             if len(customers.sprites()) > 0:
                 first_customer = customers.sprites()[0]
-                if inventory == first_customer.order.food:
-                    first_customer.served = True
-                    customers.update()
+                try:
+                    if inventory == first_customer.order.food:
+                        first_customer.served = True
+                        display_dialogue = 1
+                        customers.update()
+                        inventory = None
+                except AttributeError:
+                    pass
+                    # customer hasnt reached table yet
 
     for wall in walls:
         collide(player, wall)
@@ -395,39 +515,60 @@ while running:
     for front in fronts:
         if(collide(player, front)):
             if display_dialogue % 2 == 0:
-                font = pygame.font.Font(
-                    "../assets/victor-pixel.ttf", 24)
-                text_color = "BLACK"
-                pygame.draw.rect(screen, GRAY, (dialogue_box_x,
-                                                dialogue_box_y,
-                                                dialogue_box_width,
-                                                dialogue_box_height))
+                if len(customers.sprites()) > 0:
+                    font = pygame.font.Font(
+                        "assets/victor-pixel.ttf", 24)
+                    text_color = "BLACK"
+                    pygame.draw.rect(screen, GRAY, (dialogue_box_x,
+                                                    dialogue_box_y,
+                                                    dialogue_box_width,
+                                                    dialogue_box_height))
 
-                # Add text to the dialog box
-                text = "Please, I want one hamburger."
-                rendered_text = font.render(text, True, text_color)
-                text_rect = rendered_text.get_rect(center=(dialogue_box_x + dialogue_box_width // 2,
-                                                           dialogue_box_y + dialogue_box_height // 2))
-                screen.blit(rendered_text, text_rect)
+                    # Add text to the dialog box
+                    text = "Please, I want one hamburger."
+                    rendered_text = font.render(text, True, text_color)
+                    text_rect = rendered_text.get_rect(center=(dialogue_box_x + dialogue_box_width // 2,
+                                                               dialogue_box_y + dialogue_box_height // 2))
+                    screen.blit(rendered_text, text_rect)
         else:
             display_dialogue = 1
 
-    customers.update()
-    customers.draw(screen)
+    # customers.update()
+    for i in range(len(customers.sprites())):
+
+        index = len(customers.sprites()) - 1 - i
+        customer = customers.sprites()[index]
+        customer.update()
+        screen.blit(customer.image, (customer.rect.x, customer.rect.y))
+    # customers.draw(screen)
+
+    for i in range(len(timers.sprites())):
+        index = len(timers.sprites()) - 1 - i
+        timers.sprites()[index].update()
+    # timers.draw(screen)
 
     if len(breakfasts.sprites()) > 0:
-        for i in range(len(speech_bubbles.sprites())):
+        # for i in range(len(speech_bubbles.sprites())):
+        for j in range(len(speech_bubbles.sprites())):
+            i = len(speech_bubbles.sprites()) - 1 - j
             current_speech_bubble = speech_bubbles.sprites()[i]
             current_speech_bubble.update()
             screen.blit(current_speech_bubble.image, (current_speech_bubble.rect.x, current_speech_bubble.rect.y))
 
+        # for j in range(len(breakfasts.sprites())):
+        #     i = len(breakfasts.sprites()) - 1 - j
             current_breakfast_item = breakfasts.sprites()[i]
-            current_speech_bubble.update()
+            current_breakfast_item.update()
             screen.blit(current_breakfast_item.image, (current_breakfast_item.rect.x, current_breakfast_item.rect.y))
 
     pygame.draw.rect(screen, "black", pygame.Rect(942, 130, 68, 10))
     pygame.draw.rect(screen, "black", pygame.Rect(942, 440, 68, 10))
 
+    inventory_sprites.update()
+    inventory_sprites.draw(screen)
+
+    # all_sprites.update()
+    # all_sprites.draw(screen)
 
     pygame.display.update()
 
