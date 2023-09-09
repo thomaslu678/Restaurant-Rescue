@@ -4,7 +4,7 @@ import pygame
 import os
 pygame.init()
 
-difficulty = "HARD"
+difficulty = "EASY"
 
 inventory = None
 
@@ -487,6 +487,7 @@ while running:
                 try:
                     if inventory == first_customer.order.food:
                         first_customer.served = True
+                        display_dialogue = 1
                         customers.update()
                         inventory = None
                 except AttributeError:
@@ -514,37 +515,50 @@ while running:
     for front in fronts:
         if(collide(player, front)):
             if display_dialogue % 2 == 0:
-                font = pygame.font.Font(
-                    "../assets/victor-pixel.ttf", 24)
-                text_color = "BLACK"
-                pygame.draw.rect(screen, GRAY, (dialogue_box_x,
-                                                dialogue_box_y,
-                                                dialogue_box_width,
-                                                dialogue_box_height))
+                if len(customers.sprites()) > 0:
+                    font = pygame.font.Font(
+                        "../assets/victor-pixel.ttf", 24)
+                    text_color = "BLACK"
+                    pygame.draw.rect(screen, GRAY, (dialogue_box_x,
+                                                    dialogue_box_y,
+                                                    dialogue_box_width,
+                                                    dialogue_box_height))
 
-                # Add text to the dialog box
-                text = "Please, I want one hamburger."
-                rendered_text = font.render(text, True, text_color)
-                text_rect = rendered_text.get_rect(center=(dialogue_box_x + dialogue_box_width // 2,
-                                                           dialogue_box_y + dialogue_box_height // 2))
-                screen.blit(rendered_text, text_rect)
+                    # Add text to the dialog box
+                    text = "Please, I want one hamburger."
+                    rendered_text = font.render(text, True, text_color)
+                    text_rect = rendered_text.get_rect(center=(dialogue_box_x + dialogue_box_width // 2,
+                                                               dialogue_box_y + dialogue_box_height // 2))
+                    screen.blit(rendered_text, text_rect)
         else:
             display_dialogue = 1
 
-    customers.update()
-    customers.draw(screen)
+    # customers.update()
+    for i in range(len(customers.sprites())):
 
-    timers.update()
+        index = len(customers.sprites()) - 1 - i
+        customer = customers.sprites()[index]
+        customer.update()
+        screen.blit(customer.image, (customer.rect.x, customer.rect.y))
+    # customers.draw(screen)
+
+    for i in range(len(timers.sprites())):
+        index = len(timers.sprites()) - 1 - i
+        timers.sprites()[index].update()
     # timers.draw(screen)
 
     if len(breakfasts.sprites()) > 0:
-        for i in range(len(speech_bubbles.sprites())):
+        # for i in range(len(speech_bubbles.sprites())):
+        for j in range(len(speech_bubbles.sprites())):
+            i = len(speech_bubbles.sprites()) - 1 - j
             current_speech_bubble = speech_bubbles.sprites()[i]
             current_speech_bubble.update()
             screen.blit(current_speech_bubble.image, (current_speech_bubble.rect.x, current_speech_bubble.rect.y))
 
+        # for j in range(len(breakfasts.sprites())):
+        #     i = len(breakfasts.sprites()) - 1 - j
             current_breakfast_item = breakfasts.sprites()[i]
-            current_speech_bubble.update()
+            current_breakfast_item.update()
             screen.blit(current_breakfast_item.image, (current_breakfast_item.rect.x, current_breakfast_item.rect.y))
 
     pygame.draw.rect(screen, "black", pygame.Rect(942, 130, 68, 10))

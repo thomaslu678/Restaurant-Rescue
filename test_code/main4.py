@@ -4,7 +4,7 @@ import pygame
 import os
 pygame.init()
 
-difficulty = "EASY"
+difficulty = "HARD"
 
 inventory = None
 
@@ -491,6 +491,11 @@ while running:
         collide(player, front)
 
     customers.update()
+
+    # for sprite in customers.sprites():
+    # for i in range(len(customers.sprites())):
+    #     sprite = customers.sprites()[len(customers.sprites()) - 1]
+    #     screen.blit(sprite.image, (sprite.rect.x, sprite.rect.y))
     customers.draw(screen)
 
     timers.update()

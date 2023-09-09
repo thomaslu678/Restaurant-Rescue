@@ -4,7 +4,7 @@ import pygame, thorpy as tp
 
 pygame.init()
 
-W, H = 1200, 600
+W, H = 1200, 700
 screen = pygame.display.set_mode((W,H))
 tp.init(screen, tp.theme_human) #bind screen to gui elements and set theme
 

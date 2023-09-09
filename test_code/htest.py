@@ -396,7 +396,7 @@ while running:
         if(collide(player, front)):
             if display_dialogue % 2 == 0:
                 font = pygame.font.Font(
-                    "/Users/Jaesuchun/PycharmProjects/pygame-testing/assets/victor-pixel.ttf", 24)
+                    "../assets/victor-pixel.ttf", 24)
                 text_color = "BLACK"
                 pygame.draw.rect(screen, GRAY, (dialogue_box_x,
                                                 dialogue_box_y,
