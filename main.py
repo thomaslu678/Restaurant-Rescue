@@ -117,6 +117,30 @@ pygame.display.set_icon(bg)
 
 clock = pygame.time.Clock()
 
+class Text(pygame.sprite.Sprite):
+    def __init__(self, x, y, length, width, text_location, text):
+        super().__init__()
+
+        self.x = x
+        self.y = y
+
+        font = pygame.font.Font("assets/victor-pixel.ttf", 24)
+        text_color = ("BLACK")
+
+        self.image = pygame.Surface((length, width))
+        self.image.fill((200,214,225))
+
+        # Add text to the dialog box
+        rendered_text = font.render(text, True, text_color)
+        self.image.blit(rendered_text, text_location)
+
+        self.rect = self.image.get_rect()
+        self.rect.topleft = [self.x, self.y]
+
+    def update(self):
+        self.rect.topleft = [self.x, self.y]
+
+
 class TimerBar(pygame.sprite.Sprite):
     def __init__(self, pos_x, pos_y, timer_length, timer_width, time_limit):
         super().__init__()
@@ -424,6 +448,8 @@ front = Wall(1010, 130, 68, 320)
 fronts = pygame.sprite.Group()
 fronts.add(front)
 
+
+
 all_stations = pygame.sprite.Group()
 for station in fridges:
     all_stations.add(station)
@@ -441,6 +467,9 @@ speech_bubbles = pygame.sprite.Group()
 breakfasts = pygame.sprite.Group()
 timers = pygame.sprite.Group()
 inventory_sprites = pygame.sprite.Group()
+
+title = Text(1050, 0, 150, 100, (50, 0), "Title")
+all_sprites.add(title)
 
 kitchen_item_1 = BreakfastItem(87, 190, 0)
 kitchen_item_12 = BreakfastItem(87, 210, 0)
