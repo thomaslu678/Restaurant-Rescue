@@ -450,10 +450,10 @@ kitchen_item_21 = BreakfastItem(150, 450, 1)
 kitchen_item_22 = BreakfastItem(200, 485, 1)
 kitchen_item_3 = BreakfastItem(705, 480, 2)
 kitchen_item_31 = BreakfastItem(768, 480, 2)
-kitchen_item_4 = BreakfastItem(500, 80, 3)
-kitchen_item_41 = BreakfastItem(600, 60, 3)
-kitchen_item_42 = BreakfastItem(650, 90, 3)
-kitchen_item_43 = BreakfastItem(720, 90, 3)
+kitchen_item_4 = BreakfastItem(500, 90, 3)
+kitchen_item_41 = BreakfastItem(585, 70, 3)
+kitchen_item_42 = BreakfastItem(640, 80, 3)
+kitchen_item_43 = BreakfastItem(730, 60, 3)
 kitchen_item_5 = BreakfastItem(355, 90, 4)
 kitchen_item_51 = BreakfastItem(355, 140, 4)
 
@@ -514,6 +514,8 @@ def collide(rect1, rect2):
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 GRAY = (128, 128, 128)
+PURPLE = (191, 167, 255)
+DARKPURPLE = (69, 29, 185)
 
 dialogue_box_width = 1200
 dialogue_box_height = 150
@@ -597,11 +599,11 @@ while running:
                     if first_customer.order is not None:
                         font = pygame.font.Font(
                             "assets/victor-pixel.ttf", 24)
-                        text_color = "BLACK"
-                        pygame.draw.rect(screen, GRAY, (dialogue_box_x,
-                                                        dialogue_box_y,
-                                                        dialogue_box_width,
-                                                        dialogue_box_height))
+                        text_color = DARKPURPLE
+                        pygame.draw.rect(screen, PURPLE, (dialogue_box_x,
+                                                          dialogue_box_y,
+                                                          dialogue_box_width,
+                                                          dialogue_box_height))
 
                         # Add text to the dialog box
                         text = "Please, I want one " + str(first_customer.order.__str__()[:-4]) + "."
