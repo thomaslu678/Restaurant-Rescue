@@ -7,7 +7,7 @@ Group members: Sang Hyun Chun, Vishwa Murugappan, Dheeraj Vislawath, Thomas Lu
   <img src="/README%20Images/Instructions Screen.png" width="390" />
 </p>
 
-### Gameplay
+### Example Gameplay
 <p float="left">
   <img src="/README%20Images/Transition Screen.png" width="390" />
   <img src="/README%20Images/Order Example 1.png" width="390" />
@@ -15,5 +15,10 @@ Group members: Sang Hyun Chun, Vishwa Murugappan, Dheeraj Vislawath, Thomas Lu
 <p float="left">
     <img src="/README%20Images/Order Example 2.png" width="390" />
   <img src="/README%20Images/Order Example 3.png" width="390" />
+</p>
+
+### End Screen
+<p float="left">
+  <img src="/README%20Images/End Screen 2.png" width="390" />
 </p>
 
