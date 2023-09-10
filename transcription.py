@@ -164,7 +164,7 @@ def main():
                  ln=1)
 
     # Create PDF File within REPO
-    pdf.output("GFG.pdf")
+    pdf.output("report.pdf")
 
 if __name__ == "__main__":
     main()

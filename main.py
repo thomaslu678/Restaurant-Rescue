@@ -493,7 +493,7 @@ class Customer(pygame.sprite.Sprite):
 
                 if difficulty == "HARD":
                     if not self.has_timer:
-                        self.timer = TimerBar(self.x, self.y, 100, 10, 5000)
+                        self.timer = TimerBar(self.x, self.y, 100, 10, 10000)
                         timers.add(self.timer)
                         self.has_timer = True
 
