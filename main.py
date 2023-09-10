@@ -18,15 +18,25 @@ def first():
         screen.blit(bck, (0,0)) #blit background pic
     tp.call_before_gui(before_gui) #tells thorpy to call before_gui() before drawing gui.
 
-    ddl1 = tp.DropDownListButton(("Easy / Untimed", "Hard / Timed"))
-    ddl1_labelled = tp.Labelled("Choose Difficulty", ddl1)
+    ddl1 = tp.DropDownListButton(("  Beginner / Untimed  ", "  Advanced / Timed  "))
+    ddl1_labelled = tp.Labelled(" Choose Difficulty: ", ddl1)
 
     # ddl2 = tp.DropDownListButton(("One", "Two", "Three"), title="Two", choice_mode="h")
 
     choices = ("I want A!", "No, I want B.", "Actually, I do not know.")
     more_text = "Okay, tell me what you want."
     # alert = tp.AlertWithChoices("Some title", choices, more_text, choice_mode="h")
-    alert = tp.Alert("Instructions and Controls", "Press e to pcik up food, Press g to give food to a customer", "Back")
+    alert = tp.Alert("Instructions and Controls", " - CONTROLS - \n"
+                                                  " Use W,A,S,D to move your character! Press E to make an order and G to interact \n"
+                                                  " with customers. \n\n"
+                                                  " - OBJECTIVES - \n"
+                                                  " Deliver food to customers quickly and accurately. Receive as few complaints as \n"
+                                                  " possible. Your service score will be calculated! \n\n"
+                                                  " - GAME MODES - \n"
+                                                  " Beginner mode is untimed and will help you get used to the kitchen! You will get \n"
+                                                  " to learn to serve customers quickly. Advanced mode trains you to provide service \n"
+                                                  " in real life scenarios with complaints and time constraints. You are responsible \n"
+                                                  " for responding to complaints.", " Back ")
 
     def my_func():
         alert.launch_alone() #see _example_launch for more options
@@ -42,15 +52,15 @@ def first():
         print(1 / 0)
 
 
-    launcher = tp.Button("How to Play")
+    launcher = tp.Button("       How to Play       ")
     launcher.center_on(screen)
     launcher.at_unclick = my_func
 
-    play_button = tp.Button("Play!")
+    play_button = tp.Button("  Play!  ")
     play_button.at_unclick = get_difficulty
 
     #all the arguments except the first one (the actual choices) are optional:
-    tech_stack_button = tp.Button("Technologies Used")
+    tech_stack_button = tp.Button("  Technologies Used  ")
 
     group = tp.Box([ddl1_labelled, launcher, tech_stack_button])
     group.center_on(screen)
