@@ -1,5 +1,6 @@
 # Restaurant Rescue
 Group members: Sang Hyun Chun, Vishwa Murugappan, Dheeraj Vislawath, Thomas Lu
+Sample Registry Records: https://restaurant-rescue-registry.streamlit.app/
 
 ### Menu Screen and Pages
 <p float="left">
@@ -23,5 +24,10 @@ Group members: Sang Hyun Chun, Vishwa Murugappan, Dheeraj Vislawath, Thomas Lu
 ### End Screen
 <p float="left">
   <img src="/README%20Images/End Screen 2.png" width="390" />
+</p>
+
+### Example Registry Records
+<p float="left">
+  <img src="/README%20Images/Registry Records Example.png" width="390" />
 </p>
 
