@@ -37,10 +37,18 @@ def first():
                                                   " Beginner mode is untimed and will help you get used to the kitchen! You will get \n"
                                                   " to learn to serve customers quickly. Advanced mode trains you to provide service \n"
                                                   " in real life scenarios with complaints and time constraints. You are responsible \n"
-                                                  " for responding to complaints.", " Back ")
+                                                  " for responding to complaints.", "  Go Back  ")
+
+    alert2 = tp.Alert("Technologies Used", " - LANGUAGES, FRAMEWORKS, AND TOOLS - \n"
+                                           " Python, Streamlit, Whisper AI, Firebase \n\n"
+                                           " - LIBRARIES - \n"
+                                           " pygame, thorpy", "  Go Back  ")
 
     def my_func():
         alert.launch_alone() #see _example_launch for more options
+
+    def tech_stack():
+        alert2.launch_alone()
 
     def get_difficulty():
         global difficulty
@@ -60,8 +68,9 @@ def first():
     play_button = tp.Button("  Play!  ")
     play_button.at_unclick = get_difficulty
 
-    #all the arguments except the first one (the actual choices) are optional:
     tech_stack_button = tp.Button("  Technologies Used  ")
+    tech_stack_button.center_on(screen)
+    tech_stack_button.at_unclick = tech_stack
 
     group = tp.Box([ddl1_labelled, launcher, tech_stack_button])
     group.center_on(screen)
