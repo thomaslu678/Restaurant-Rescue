@@ -116,10 +116,11 @@ pygame.display.set_icon(bg)
 clock = pygame.time.Clock()
 
 class TimerBar(pygame.sprite.Sprite):
-    def __init__(self, pos_x, pos_y, timer_width, time_limit):
+    def __init__(self, pos_x, pos_y, timer_length, timer_width, time_limit):
         super().__init__()
         self.x = pos_x
         self.y = pos_y
+        self.length = timer_length
         self.width = timer_width
 
         self.time_limit = time_limit
@@ -132,16 +133,16 @@ class TimerBar(pygame.sprite.Sprite):
         # self.image = pygame.Surface((self.width, 20))
         self.rect2 = pygame.draw.rect(self.image,
                                      "red",
-                                     pygame.Rect(pos_x, pos_y, self.width, 20))
+                                     pygame.Rect(pos_x, pos_y, self.length, self.width))
         self.rect = pygame.draw.rect(self.image,
                                      "green",
-                                     pygame.Rect(pos_x, pos_y, self.width, 20))
+                                     pygame.Rect(pos_x, pos_y, self.length, self.width))
 
 
     def update(self):
         self.rect2 = pygame.draw.rect(self.image,
                                      "red",
-                                     pygame.Rect(self.x, self.y, self.width, 20))
+                                     pygame.Rect(self.x, self.y, self.length, self.width))
 
         now = pygame.time.get_ticks()
         self.time_left = self.time_limit -(now - self.created)
@@ -150,8 +151,8 @@ class TimerBar(pygame.sprite.Sprite):
             self.time_up = True
         else:
             self.rect = pygame.draw.rect(screen, "green",
-                                         pygame.Rect(self.x, self.y, self.width * (self.time_left / self.time_limit),
-                                                     20))
+                                         pygame.Rect(self.x, self.y, self.length * (self.time_left / self.time_limit),
+                                                     self.width))
 
 class BreakfastItem(pygame.sprite.Sprite):
     def __init__(self, x, y, index):
@@ -351,7 +352,7 @@ class Customer(pygame.sprite.Sprite):
                             speech_bubbles.add(speech_bubble)
                             breakfasts.add(breakfast_item)
                             if difficulty == "HARD":
-                                self.timer = TimerBar(self.x, self.y - 20, 100, 5000)
+                                self.timer = TimerBar(self.x, self.y, 100, 10, 5000)
                                 timers.add(self.timer)
 
 
