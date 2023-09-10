@@ -42,7 +42,7 @@ def first():
         print(1 / 0)
 
 
-    launcher = tp.Button("View Instructions and Controls")
+    launcher = tp.Button("How to Play")
     launcher.center_on(screen)
     launcher.at_unclick = my_func
 
@@ -50,18 +50,9 @@ def first():
     play_button.at_unclick = get_difficulty
 
     #all the arguments except the first one (the actual choices) are optional:
-    ddl3 = tp.DropDownListButton(("Beginner", "Intermediate", "Expert", "Pro"),
-                                    title=None, #by default, will take the first value
-                                    choice_mode="v", #'v' for vertical or 'h' for horizontal
-                                    align="left", #how to align choices in the list
-                                    launch_nonblocking=False, #launch mode
-                                    size_limit=("auto","auto"), #limit size of the list of options
-                                    all_same_width=True, #all choices same width
-                                    generate_shadow=(True, "auto"))#[0] : does generate shadow ? [1] : fast method or accurate method ? you can set [1] = "auto"
+    tech_stack_button = tp.Button("Technologies Used")
 
-    ddl3_labelled = tp.Labelled("Third example", ddl3)
-
-    group = tp.Box([ddl1_labelled, launcher, ddl3_labelled])
+    group = tp.Box([ddl1_labelled, launcher, tech_stack_button])
     group.center_on(screen)
     final_group = tp.Group([group, play_button])
     final_group.get_updater().launch()
