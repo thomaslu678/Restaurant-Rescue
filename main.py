@@ -1,3 +1,5 @@
+import time
+
 import pygame, thorpy as tp
 import random
 import pygame
@@ -276,6 +278,21 @@ class SpeechBubble(pygame.sprite.Sprite):
     def update(self):
         self.rect.topleft = [self.x, self.y]
 
+BLACK = (0, 0, 0)
+WHITE = (255, 255, 255)
+GRAY = (128, 128, 128)
+PURPLE = (191, 167, 255)
+DARKPURPLE = (69, 29, 185)
+DARKRED = (195, 41, 41)
+RED = (245, 138, 139)
+
+
+dialogue_box_width = 1200
+dialogue_box_height = 150
+dialogue_box_x = (1200 - dialogue_box_width) // 2
+dialogue_box_y = (600 - dialogue_box_height)
+
+display_dialogue = 0
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, x, y):
@@ -461,9 +478,27 @@ class Customer(pygame.sprite.Sprite):
             global display_dialogue
             display_dialogue = 1
 
+            font = pygame.font.Font(
+                "assets/victor-pixel.ttf", 24)
+            text_color = DARKRED
+            pygame.draw.rect(screen, RED, (dialogue_box_x,
+                                              dialogue_box_y,
+                                              dialogue_box_width,
+                                              dialogue_box_height))
+
+            # Add text to the dialog box
+            text = "Dissatisfied " +"."
+            rendered_text = font.render(text, True, text_color)
+            text_rect = rendered_text.get_rect(center=(dialogue_box_x + dialogue_box_width // 2,
+                                                       dialogue_box_y + dialogue_box_height // 2))
+            screen.blit(rendered_text, text_rect)
+            pygame.display.update()
+            time.sleep(1.5)
+
             global points
             points -= 5
             points_text.text = "Points: " + str(points)
+
 
         if self.served:
             if self.timer is not None:
@@ -815,7 +850,7 @@ while running:
 
     dt = clock.tick(60) / 1000
 
-    if points >= 5 or points <= -5:
+    if points >= 15 or points <= -15:
         running = False
 
 
