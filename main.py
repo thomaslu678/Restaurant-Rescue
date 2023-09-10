@@ -815,6 +815,43 @@ while running:
 
     dt = clock.tick(60) / 1000
 
-    if points >= 25 or points <= -25:
+    if points >= 5 or points <= -5:
         running = False
-        print("lol u suck")
+
+
+end_game_flag = True
+
+def end_screen():
+    pygame.init()
+    W, H = 1200, 600
+    screen = pygame.display.set_mode((W,H))
+    pygame.display.set_caption("Restaurant Rescue")
+    tp.init(screen, tp.theme_human) #bind screen to gui elements and set theme
+
+    if points > 0:
+        bck = pygame.image.load("assets/end_game_positive.png")
+    else:
+        bck = pygame.image.load("assets/end_game_negative.png")
+    bck = pygame.transform.smoothscale(bck, (W,H))
+    def before_gui(): #add here the things to do each frame before blitting gui elements
+        screen.blit(bck, (0,0)) #blit background pic
+    tp.call_before_gui(before_gui) #tells thorpy to call before_gui() before drawing gui.
+
+    def end_game():
+        global difficulty
+        print(1 / 0)
+
+
+    end_button = tp.Button("      Close Game     ")
+    end_button.at_unclick = end_game
+
+    group = tp.Box([end_button])
+    group.center_on(screen)
+    final_group = tp.Group([group])
+    final_group.get_updater().launch()
+
+while end_game_flag:
+    try:
+        end_screen()
+    except:
+        break
