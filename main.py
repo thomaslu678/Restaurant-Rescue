@@ -45,11 +45,8 @@ def first():
     def get_difficulty():
         global difficulty
         print("User has chosen:", ddl1.get_value())
-        if ddl1.get_value()[0] == 'E' or ddl1.get_value()[0] == 'N':
-            difficulty = 'EASY'
-        elif ddl1.get_value()[0] == 'H':
-            difficulty = 'HARD'
-
+        if ddl1.get_value() == "  Advanced / Timed  ":
+            difficulty = "HARD"
         print(1 / 0)
 
 
@@ -399,6 +396,10 @@ class Customer(pygame.sprite.Sprite):
             self.served = True
             global display_dialogue
             display_dialogue = 1
+
+            global points
+            points -= 5
+            points_text.text = "Points: " + str(points)
         if self.served:
             if self.timer is not None:
                 self.timer.kill()
