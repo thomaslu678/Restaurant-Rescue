@@ -27,13 +27,17 @@ def first():
     choices = ("I want A!", "No, I want B.", "Actually, I do not know.")
     more_text = "Okay, tell me what you want."
     # alert = tp.AlertWithChoices("Some title", choices, more_text, choice_mode="h")
-    alert = tp.Alert("Instructions and Controls", " - CONTROLS - \n"
-                                                  " Use W,A,S,D to move your character! Press E to make an order and G to interact \n"
-                                                  " with customers. \n\n"
+    alert = tp.Alert("Instructions and Controls", " Congrats on making it through the interview process! Your final challenge is to manage the \n"
+                                                  " store while the manager is gone.  Make sure to do your best, as your manager will be reviewing \n"
+                                                  " your performance after they return! \n\n"
+                                                  "- CONTROLS - \n"
+                                                  " Use W,A,S,D to move your character! Press E to pick up and cook food and G to interact with \n"
+                                                  " customers and deliver food. \n\n"
                                                   " - OBJECTIVES - \n"
                                                   " Deliver food to customers quickly and accurately. Receive as few complaints as \n"
                                                   " possible. Your service score will be calculated! \n\n"
                                                   " - GAME MODES - \n"
+<<<<<<< Updated upstream
                                                   " Beginner mode is untimed and will help you get used to the kitchen! You will get \n"
                                                   " to learn to serve customers quickly. Advanced mode trains you to provide service \n"
                                                   " in real life scenarios with complaints and time constraints. You are responsible \n"
@@ -43,6 +47,13 @@ def first():
                                            " Python, Streamlit, Whisper AI, Firebase \n\n"
                                            " - LIBRARIES - \n"
                                            " pygame, thorpy", "  Go Back  ")
+=======
+                                                  " Beginner mode: It is untimed and will help you get used to the kitchen and the game controls! \n"
+                                                  " Advanced mode: It trains you to provide service in real life scenarios with time constraints and \n"
+                                                  " complaints. You will have to record yorself speaking to dissatisfied customers, which your manager \n"
+                                                  " can watch later to see how you handle customer interactions."
+                                                  , "  Go Back  ")
+>>>>>>> Stashed changes
 
     def my_func():
         alert.launch_alone() #see _example_launch for more options
