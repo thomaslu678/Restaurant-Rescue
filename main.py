@@ -161,10 +161,14 @@ class BreakfastItem(pygame.sprite.Sprite):
 
         self.x = x
         self.y = y
+        self.index = index
         self.image = breakfast_foods[index]
         self.food = "breakfast " + str(index)
         self.rect = self.image.get_rect()
         self.rect.topleft = [self.x, self.y]
+
+    def __str__(self):
+        return dir_list[self.index]
 
     def update(self):
         self.rect.topleft = [self.x, self.y]
@@ -589,20 +593,21 @@ while running:
         if(collide(player, front)):
             if display_dialogue % 2 == 0:
                 if len(customers.sprites()) > 0:
-                    font = pygame.font.Font(
-                        "assets/victor-pixel.ttf", 24)
-                    text_color = "BLACK"
-                    pygame.draw.rect(screen, GRAY, (dialogue_box_x,
-                                                    dialogue_box_y,
-                                                    dialogue_box_width,
-                                                    dialogue_box_height))
+                    if first_customer.order is not None:
+                        font = pygame.font.Font(
+                            "assets/victor-pixel.ttf", 24)
+                        text_color = "BLACK"
+                        pygame.draw.rect(screen, GRAY, (dialogue_box_x,
+                                                        dialogue_box_y,
+                                                        dialogue_box_width,
+                                                        dialogue_box_height))
 
-                    # Add text to the dialog box
-                    text = "Please, I want one hamburger."
-                    rendered_text = font.render(text, True, text_color)
-                    text_rect = rendered_text.get_rect(center=(dialogue_box_x + dialogue_box_width // 2,
-                                                               dialogue_box_y + dialogue_box_height // 2))
-                    screen.blit(rendered_text, text_rect)
+                        # Add text to the dialog box
+                        text = "Please, I want one " + str(first_customer.order.__str__()[:-4]) + "."
+                        rendered_text = font.render(text, True, text_color)
+                        text_rect = rendered_text.get_rect(center=(dialogue_box_x + dialogue_box_width // 2,
+                                                                   dialogue_box_y + dialogue_box_height // 2))
+                        screen.blit(rendered_text, text_rect)
         else:
             display_dialogue = 1
 
