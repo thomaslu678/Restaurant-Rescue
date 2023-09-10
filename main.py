@@ -62,7 +62,7 @@ def first():
     launcher.center_on(screen)
     launcher.at_unclick = my_func
 
-    play_button = tp.Button("  Play!  ")
+    play_button = tp.Button("    Play!    ")
     play_button.at_unclick = get_difficulty
 
     tech_stack_button = tp.Button("  Technologies Used  ")
