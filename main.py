@@ -36,8 +36,7 @@ def first():
                                                   " Use W,A,S,D to move your character! Press E to pick up and cook food and G to interact with \n"
                                                   " customers and deliver food. \n\n"
                                                   " - OBJECTIVES - \n"
-                                                  " Deliver food to customers quickly and accurately. Receive as few complaints as \n"
-                                                  " possible. Your service score will be calculated! \n\n"
+                                                  " Deliver food to customers quickly and accurately. Receive as few complaints as possible\n\n"
                                                   " - GAME MODES - \n"
 
                                                   " Beginner mode is untimed and will help you get used to the kitchen! You will get \n"
