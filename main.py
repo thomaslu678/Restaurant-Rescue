@@ -80,6 +80,8 @@ pygame.init()
 
 inventory = None
 
+points = 0
+
 bg = pygame.image.load("assets/kitchen+counter_crop.png")
 bg = pygame.transform.scale(bg, (1200, 600))
 
@@ -123,21 +125,36 @@ class Text(pygame.sprite.Sprite):
 
         self.x = x
         self.y = y
+        self.length = length
+        self.width = width
+        self.text_location = text_location
+        self.text = text
 
-        font = pygame.font.Font("assets/victor-pixel.ttf", 24)
-        text_color = ("BLACK")
+        self.font = pygame.font.Font("assets/victor-pixel.ttf", 24)
+        self.text_color = ("BLACK")
 
-        self.image = pygame.Surface((length, width))
+        self.image = pygame.Surface((self.length, self.width))
         self.image.fill((200,214,225))
 
         # Add text to the dialog box
-        rendered_text = font.render(text, True, text_color)
-        self.image.blit(rendered_text, text_location)
+        rendered_text = self.font.render(self.text, True, self.text_color)
+        self.image.blit(rendered_text, self.text_location)
 
         self.rect = self.image.get_rect()
         self.rect.topleft = [self.x, self.y]
 
     def update(self):
+        self.font = pygame.font.Font("assets/victor-pixel.ttf", 24)
+        self.text_color = ("BLACK")
+
+        self.image = pygame.Surface((self.length, self.width))
+        self.image.fill((200, 214, 225))
+
+        # Add text to the dialog box
+        rendered_text = self.font.render(self.text, True, self.text_color)
+        self.image.blit(rendered_text, self.text_location)
+
+        self.rect = self.image.get_rect()
         self.rect.topleft = [self.x, self.y]
 
 
