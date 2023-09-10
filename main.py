@@ -389,6 +389,7 @@ class Customer(pygame.sprite.Sprite):
         self.order = None
         self.speech = None
         self.timer = None
+        self.has_timer = False
 
         self.image = customer_sprites[random.randint(0, len(customer_sprites)-1)]
         self.right = self.image
@@ -409,6 +410,7 @@ class Customer(pygame.sprite.Sprite):
             global points
             points -= 5
             points_text.text = "Points: " + str(points)
+
         if self.served:
             if self.timer is not None:
                 self.timer.kill()
@@ -435,6 +437,12 @@ class Customer(pygame.sprite.Sprite):
                 breakfast_item = BreakfastItem(customer.rect.x + 50, customer.rect.y - 65,
                                                random.randint(0, len(breakfast_foods) - 1))
 
+                if difficulty == "HARD":
+                    if not self.has_timer:
+                        self.timer = TimerBar(self.x, self.y, 100, 10, 5000)
+                        timers.add(self.timer)
+                        self.has_timer = True
+
                 if self.order is None:
                     keys = pygame.key.get_pressed()
                     if keys[pygame.K_g]:
@@ -443,9 +451,9 @@ class Customer(pygame.sprite.Sprite):
                             self.speech = speech_bubble
                             speech_bubbles.add(speech_bubble)
                             breakfasts.add(breakfast_item)
-                            if difficulty == "HARD":
-                                self.timer = TimerBar(self.x, self.y, 100, 10, 5000)
-                                timers.add(self.timer)
+                            # if difficulty == "HARD":
+                            #     self.timer = TimerBar(self.x, self.y, 100, 10, 5000)
+                            #     timers.add(self.timer)
 
 
 
