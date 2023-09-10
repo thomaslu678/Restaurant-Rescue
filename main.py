@@ -100,6 +100,7 @@ for file in dir_list:
 breakfast_foods = []
 path = "assets/breakfast"
 dir_list = os.listdir(path)
+dir_list.sort()
 
 for file in dir_list:
     img = pygame.image.load(path + "/" + file)
