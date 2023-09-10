@@ -488,6 +488,10 @@ inventory_sprites = pygame.sprite.Group()
 title = Text(1050, 0, 150, 100, (50, 0), "Title")
 all_sprites.add(title)
 
+points_text = Text(1050, 50, 150, 100, (0, 0), "Points: " + str(points))
+all_sprites.add(points_text)
+
+
 kitchen_item_1 = BreakfastItem(87, 190, 0)
 kitchen_item_12 = BreakfastItem(87, 210, 0)
 kitchen_item_13 = BreakfastItem(87, 230, 0)
@@ -590,8 +594,6 @@ while running:
                 print(display_dialogue)
                 display_dialogue += 1
 
-
-
     all_sprites.update()
     all_sprites.draw(screen)
 
@@ -612,6 +614,8 @@ while running:
                 first_customer = customers.sprites()[0]
                 try:
                     if inventory == first_customer.order.food:
+                        points += 5
+                        points_text.text = "Points: " + str(points)
                         first_customer.served = True
                         display_dialogue = 1
                         customers.update()
