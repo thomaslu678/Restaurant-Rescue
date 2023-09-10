@@ -283,7 +283,12 @@ class Player(pygame.sprite.Sprite):
 
         self.x = x
         self.y = y
+        self.colliding_station = None
         self.image = waiter
+        self.timer = None
+        self.making_food = False
+        self.food_queue = None
+        self.food_ready = False
         self.rect = self.image.get_rect()
         self.rect.topleft = [self.x, self.y]
 
@@ -339,9 +344,41 @@ class Player(pygame.sprite.Sprite):
             for sprite in inventory_sprites:
                 sprite.kill()
 
+        if self.colliding_station is not None:
+            if not collide(self, self.colliding_station):
+                self.colliding_station = None
+
+                if self.timer is not None:
+                    timers.remove(self.timer)
+                    self.timer = None
+                    self.food_queue = None
+                    self.food_ready = False
+                    self.making_food = False
+
+        if self.timer is None:
+            if self.making_food:
+                self.timer = TimerBar(self.x, self.y, 100, 10, 2000)
+                timers.add(self.timer)
+        else:
+            if self.timer is not None:
+                self.timer.x = self.x
+                self.timer.y = self.y
+                if self.timer.time_up:
+                    self.food_ready = True
+
+        if self.food_ready:
+            timers.remove(self.timer)
+            self.timer = None
+            inventory = self.food_queue
+            self.food_queue = None
+            self.food_ready = False
+            self.making_food = False
+
+
         for station in all_stations:
 
             if (collide(player, station)):
+                self.colliding_station = station
                 if fridges in station.groups():
                     # cookie.x = player.x
                     # cookie.y = player.y - 20
@@ -353,33 +390,43 @@ class Player(pygame.sprite.Sprite):
 
                     # if not (collide(player, fridge)):
                     if keys[pygame.K_e]:
-                        inventory = "breakfast 0"
+                        self.making_food = True
+                        self.food_queue = "breakfast 0"
+                        # inventory = "breakfast 0"
                         # inventory = breakfast_foods[0]
 
                 if stoves in station.groups():
                     # if not (collide(player, stove)):
                     if keys[pygame.K_e]:
-                        inventory = "breakfast 1"
+                        self.making_food = True
+                        self.food_queue = "breakfast 1"
+                        # inventory = "breakfast 1"
                         # inventory = breakfast_foods[1]
 
                 if sinks in station.groups():
                     # if not (collide(player, sink)):
                         if keys[pygame.K_e]:
-                            inventory = "breakfast 2"
+                            self.making_food = True
+                            self.food_queue = "breakfast 2"
+                            # inventory = "breakfast 2"
                             # inventory = breakfast_foods[4]
 
                 if counters in station.groups():
                     # if not (collide(player, counter)):
                         if keys[pygame.K_e]:
-                            inventory = "breakfast 3"
+                            self.making_food = True
+                            self.food_queue = "breakfast 3"
+                            # inventory = "breakfast 3"
                             # inventory = breakfast_foods[3]
 
-            # good
+                # good
                 if trays in station.groups():
                     # if not (collide(player, tray)):
-                        if keys[pygame.K_e]:
-                            inventory = "breakfast 4"
-                            # inventory = breakfast_foods[2]
+                    if keys[pygame.K_e]:
+                        self.making_food = True
+                        self.food_queue = "breakfast 4"
+                        # inventory = "breakfast 4"
+                        # inventory = breakfast_foods[2]
 
 class Wall(pygame.sprite.Sprite):
     def __init__(self, x, y, length, height):
