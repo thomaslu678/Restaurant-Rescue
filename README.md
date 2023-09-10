@@ -1,5 +1,6 @@
 # Restaurant Rescue
 Group members: Sang Hyun Chun, Vishwa Murugappan, Dheeraj Vislawath, Thomas Lu
+
 Sample Registry Records: https://restaurant-rescue-registry.streamlit.app/
 
 ### Menu Screen and Pages
