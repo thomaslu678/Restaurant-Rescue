@@ -10,6 +10,7 @@ def first():
     pygame.init()
     W, H = 1200, 600
     screen = pygame.display.set_mode((W,H))
+    pygame.display.set_caption("Restaurant Rescue")
     tp.init(screen, tp.theme_human) #bind screen to gui elements and set theme
 
     bck = pygame.image.load("assets/welcome.png") #load some background pic for testing
@@ -75,7 +76,41 @@ while flag:
     except:
         break
 
-print(difficulty)
+start_game_flag = True
+
+def second_screen():
+    pygame.init()
+    W, H = 1200, 600
+    screen = pygame.display.set_mode((W,H))
+    pygame.display.set_caption("Restaurant Rescue")
+    tp.init(screen, tp.theme_human) #bind screen to gui elements and set theme
+
+    bck = pygame.image.load("assets/kitchen+counter_crop.png") #load some background pic for testing
+    bck = pygame.transform.smoothscale(bck, (W,H))
+    def before_gui(): #add here the things to do each frame before blitting gui elements
+        screen.blit(bck, (0,0)) #blit background pic
+    tp.call_before_gui(before_gui) #tells thorpy to call before_gui() before drawing gui.
+
+    def start_game():
+        global difficulty
+        print(1 / 0)
+
+
+    play_button = tp.Button("  Begin Evaluation!  ")
+    play_button.at_unclick = start_game
+
+    group = tp.Box([play_button])
+    group.center_on(screen)
+    final_group = tp.Group([group])
+    final_group.get_updater().launch()
+
+while start_game_flag:
+    try:
+        second_screen()
+    except:
+        break
+
+
 pygame.init()
 
 inventory = None
@@ -114,7 +149,7 @@ WINDOW_WIDTH = 1200
 WINDOW_HEIGHT = 600
 
 screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT), pygame.RESIZABLE)
-pygame.display.set_caption("Restaurant Game")
+pygame.display.set_caption("Restaurant Rescue")
 pygame.display.set_icon(bg)
 
 clock = pygame.time.Clock()
