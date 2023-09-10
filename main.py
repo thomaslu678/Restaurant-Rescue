@@ -37,7 +37,7 @@ def first():
                                                   " Deliver food to customers quickly and accurately. Receive as few complaints as \n"
                                                   " possible. Your service score will be calculated! \n\n"
                                                   " - GAME MODES - \n"
-<<<<<<< Updated upstream
+
                                                   " Beginner mode is untimed and will help you get used to the kitchen! You will get \n"
                                                   " to learn to serve customers quickly. Advanced mode trains you to provide service \n"
                                                   " in real life scenarios with complaints and time constraints. You are responsible \n"
@@ -47,13 +47,9 @@ def first():
                                            " Python, Streamlit, Whisper AI, Firebase \n\n"
                                            " - LIBRARIES - \n"
                                            " pygame, thorpy", "  Go Back  ")
-=======
-                                                  " Beginner mode: It is untimed and will help you get used to the kitchen and the game controls! \n"
-                                                  " Advanced mode: It trains you to provide service in real life scenarios with time constraints and \n"
-                                                  " complaints. You will have to record yorself speaking to dissatisfied customers, which your manager \n"
-                                                  " can watch later to see how you handle customer interactions."
-                                                  , "  Go Back  ")
->>>>>>> Stashed changes
+
+
+
 
     def my_func():
         alert.launch_alone() #see _example_launch for more options
