@@ -749,3 +749,7 @@ while running:
     pygame.display.update()
 
     dt = clock.tick(60) / 1000
+
+    if points >= 25 or points <= -25:
+        running = False
+        print("lol u suck")
