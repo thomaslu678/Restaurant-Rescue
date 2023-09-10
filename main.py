@@ -487,13 +487,13 @@ class Customer(pygame.sprite.Sprite):
                                               dialogue_box_height))
 
             # Add text to the dialog box
-            text = "Dissatisfied " +"."
+            text = "Customer was dissatisfied and has left the restaurant" +"."
             rendered_text = font.render(text, True, text_color)
             text_rect = rendered_text.get_rect(center=(dialogue_box_x + dialogue_box_width // 2,
                                                        dialogue_box_y + dialogue_box_height // 2))
             screen.blit(rendered_text, text_rect)
             pygame.display.update()
-            time.sleep(1.5)
+            time.sleep(3)
 
             global points
             points -= 5
@@ -765,6 +765,26 @@ while running:
                         display_dialogue = 1
                         customers.update()
                         inventory = None
+                    else:
+                        display_dialogue = 1
+
+                        font = pygame.font.Font(
+                            "assets/victor-pixel.ttf", 24)
+                        text_color = DARKRED
+                        pygame.draw.rect(screen, RED, (dialogue_box_x,
+                                                       dialogue_box_y,
+                                                       dialogue_box_width,
+                                                       dialogue_box_height))
+
+                        # Add text to the dialog box
+                        text = "The food is totally incorrect" + "!!! " + "Fix it immediately" + "!!!"
+                        rendered_text = font.render(text, True, text_color)
+                        text_rect = rendered_text.get_rect(center=(dialogue_box_x + dialogue_box_width // 2,
+                                                                   dialogue_box_y + dialogue_box_height // 2))
+                        screen.blit(rendered_text, text_rect)
+                        pygame.display.update()
+                        time.sleep(3)
+
                 except AttributeError:
                     pass
                     # customer hasnt reached table yet
