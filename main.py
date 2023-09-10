@@ -530,10 +530,13 @@ breakfasts = pygame.sprite.Group()
 timers = pygame.sprite.Group()
 inventory_sprites = pygame.sprite.Group()
 
-title = Text(1050, 0, 150, 100, (50, 0), "Title")
+title = Text(900, 10, 300, 30, (25, 0), "Restaurant Rescue!")
 all_sprites.add(title)
 
-points_text = Text(1050, 50, 150, 100, (0, 0), "Points: " + str(points))
+objective = Text(400, 10, 300, 30, (0, 0), "Goal: reach 100 pts!")
+all_sprites.add(objective)
+
+points_text = Text(1050, 40, 150, 20, (0, 0), "Points: " + str(points))
 all_sprites.add(points_text)
 
 
