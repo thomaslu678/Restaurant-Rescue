@@ -5,6 +5,9 @@ import random
 import pygame
 import os
 
+import pyaudio
+import wave
+
 flag = True
 difficulty = "EASY"
 
@@ -293,6 +296,13 @@ dialogue_box_y = (600 - dialogue_box_height)
 
 display_dialogue = 0
 
+CHUNK = 1024
+FORMAT = pyaudio.paInt16
+CHANNELS = 1
+RATE = 44100
+RECORD_SECONDS = 15
+p = pyaudio.PyAudio()
+
 class Player(pygame.sprite.Sprite):
     def __init__(self, x, y):
         super().__init__()
@@ -486,13 +496,56 @@ class Customer(pygame.sprite.Sprite):
                                               dialogue_box_height))
 
             # Add text to the dialog box
-            text = "Customer was dissatisfied and has left the restaurant" +"."
+            text = "I can't believe the service is so slow" + "!" + " I'm Leaving" + "."
             rendered_text = font.render(text, True, text_color)
             text_rect = rendered_text.get_rect(center=(dialogue_box_x + dialogue_box_width // 2,
                                                        dialogue_box_y + dialogue_box_height // 2))
             screen.blit(rendered_text, text_rect)
             pygame.display.update()
-            time.sleep(3)
+            time.sleep(4)
+
+            def record(file_name):
+
+                stream = p.open(format=FORMAT,
+                                channels=CHANNELS,
+                                rate=RATE,
+                                input=True,
+                                frames_per_buffer=CHUNK)
+
+                frames = []
+                print("starting recording " + file_name + ".")
+                # 0, int(RATE / CHUNK * 2)
+                for i in range(0, int(RATE / CHUNK * RECORD_SECONDS)):
+                    data = stream.read(CHUNK)
+                    frames.append(data)
+                print("finished recording")
+
+                stream.stop_stream()
+                stream.close()
+
+                wf = wave.open(file_name, 'wb')
+                wf.setnchannels(CHANNELS)
+                wf.setsampwidth(p.get_sample_size(FORMAT))
+                wf.setframerate(RATE)
+                wf.writeframes(b''.join(frames))
+                wf.close()
+
+            def start_record():
+                record("latecustomer.wav")
+                print(1/0)
+
+            try:
+                record_button = tp.Button("Start Recording!")
+                record_button.at_unclick = start_record
+
+                group = tp.Box([record_button])
+                group.center_on(screen)
+                final_group = tp.Group([group])
+                final_group.get_updater().launch()
+
+            except:
+                pass
+
 
             global points
             points -= 5
@@ -750,6 +803,16 @@ while running:
     if keys[pygame.K_s]:
         player.y += 1000 * dt
     if keys[pygame.K_d]:
+        player.image = pygame.transform.flip(waiter, False, False)
+        player.x += 1000 * dt
+    if keys[pygame.K_UP]:
+        player.y -= 1000 * dt
+    if keys[pygame.K_LEFT]:
+        player.image = pygame.transform.flip(waiter, True, False)
+        player.x -= 1000 * dt
+    if keys[pygame.K_DOWN]:
+        player.y += 1000 * dt
+    if keys[pygame.K_RIGHT]:
         player.image = pygame.transform.flip(waiter, False, False)
         player.x += 1000 * dt
     if keys[pygame.K_g]:
