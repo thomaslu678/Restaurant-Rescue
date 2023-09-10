@@ -32,3 +32,4 @@ Sample Registry Records: https://restaurant-rescue-registry.streamlit.app/
   <img src="/README%20Images/Registry Records Example.png" width="390" />
 </p>
 
+Sprite Credits to Pixel People
